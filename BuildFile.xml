@@ -1,0 +1,11 @@
+<use name="root" />
+<use name="boost" />
+
+<Flags CPPDEFINES="FROM_CMSSW=1" />
+<Flags CPPDEFINES="PWD=$(PWD)" />
+
+<export>
+    <use name="root" />
+    <use name="boost" />
+    <lib name="1" />
+</export>
