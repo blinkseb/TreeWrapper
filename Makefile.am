@@ -8,3 +8,5 @@ libTreeWrapper_la_LIBADD  = @ROOTLIBS@ @ROOTAUXLIBS@
 
 AM_CPPFLAGS             = @AM_CPPFLAGS@ -Iinterface -I@ROOTINCDIR@
 AM_LDFLAGS              = -L@ROOTLIBDIR@
+
+include_HEADERS = interface/TreeWrapper.h interface/Leaf.h

@@ -29,14 +29,14 @@ $ make install
 
 ### Usage
 
-Usage is very simple. Include the header `interface/TreeWrapper.h` in your source file.
+Usage is very simple. Include the header `TreeWrapper.h` in your source file.
 
 #### Read mode
 
 Below is an example of how to read a TTree with the wrapper
 
 ```C++
-#include <interface/TreeWrapper.h>
+#include <TreeWrapper.h>
 
 [...]
 
@@ -60,7 +60,7 @@ while (tree.next()) {
 Below is an example of how to write a TTree with the wrapper
 
 ```C++
-#include <interface/TreeWrapper.h>
+#include <TreeWrapper.h>
 
 [...]
 
