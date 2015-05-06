@@ -12,11 +12,25 @@ namespace ROOT {
     TreeWrapper::TreeWrapper(TTree* tree):
         m_tree(tree),
         m_entry(-1) {
-
-            if (m_tree->GetListOfLeaves()->GetEntriesFast() > 0)
-                // Disable reading of all branches by default
-                m_tree->SetBranchStatus("*", 0);
+            init(tree);
         }
+
+    TreeWrapper::TreeWrapper():
+        m_tree(nullptr),
+        m_entry(-1) {
+
+        }
+
+    void TreeWrapper::init(TTree* tree) {
+        m_tree = tree;
+        if (m_tree->GetListOfLeaves()->GetEntriesFast() > 0) {
+            // Disable reading of all branches by default
+            m_tree->SetBranchStatus("*", 0);
+        }
+
+        for (auto& leaf: m_leafs)
+            leaf.second->init(m_tree);
+    }
 
     /**
      * Read the next entry of the tree.

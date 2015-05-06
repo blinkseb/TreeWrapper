@@ -12,18 +12,28 @@ namespace ROOT {
 
         public:
             TreeWrapper(TTree* tree);
+            TreeWrapper();
+
+            void init(TTree* tree);
 
             bool next();
             void rewind() {
                 m_entry = -1;
             }
 
-            void fill() {
+            void fill(bool reset = true) {
                 m_tree->Fill();
+                if (reset)
+                    this->reset();
             }
 
             inline uint64_t getEntries() {
                 return m_tree->GetEntries();
+            }
+
+            inline void reset() {
+                for (auto& leaf: m_leafs)
+                    leaf.second->reset();
             }
 
             Leaf& operator[](const std::string& name);

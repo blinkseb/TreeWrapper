@@ -5,6 +5,9 @@
 
 #include <TTree.h>
 
+#include "Brancher.h"
+#include "Resetter.h"
+
 namespace ROOT {
     class Leaf {
         public:
@@ -17,9 +20,14 @@ namespace ROOT {
                     m_data = boost::any(T());
 
                     T& data = boost::any_cast<T&>(m_data);
+                    m_resetter.reset(new ResetterT<T>(data));
 
-                    // Register this Leaf in the tree
-                    m_tree->Branch<T>(m_name.c_str(), &data);
+                    if (m_tree) {
+                        // Register this Leaf in the tree
+                        m_tree->Branch<T>(m_name.c_str(), &data);
+                    } else {
+                        m_brancher.reset(new BranchCreaterT<T>(data));
+                    }
                 }
 
                 return boost::any_cast<T&>(m_data);
@@ -32,16 +40,32 @@ namespace ROOT {
                     m_data = boost::any(std::shared_ptr<T>(new T()));
 
                     T* data = boost::any_cast<std::shared_ptr<T>>(m_data).get();
-                    m_tree->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
+                    m_resetter.reset(new ResetterT<T>(*data));
 
-                    // Enable read for this branch
-                    m_branch->SetStatus(1);
+                    if (m_tree) {
+                        m_tree->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
+                        // Enable read for this branch
+                        m_branch->SetStatus(1);
+                    } else {
+                        m_brancher.reset(new BranchReaderT<T>(data, &m_branch));
+                    }
                 }
 
                 // Return a const since we read from the tree
                 return const_cast<const T&>(*boost::any_cast<std::shared_ptr<T>>(m_data));
             }
 
+            void init(TTree* tree) {
+                m_tree = tree;
+                if (m_brancher.get())
+                    (*m_brancher)(m_name, m_tree);
+            }
+
+            void reset() {
+              if (m_resetter.get()) {
+                  m_resetter->reset();
+              }
+            }
 
             Leaf(const Leaf&) = delete;
             Leaf& operator=(const Leaf&) = delete;
@@ -60,5 +84,7 @@ namespace ROOT {
             std::string m_name;
             TTree* m_tree;
 
+            std::unique_ptr<Resetter> m_resetter;
+            std::unique_ptr<Brancher> m_brancher;
     };
 };
