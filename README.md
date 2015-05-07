@@ -85,6 +85,7 @@ for (i = O; i < events; i++) {
     tree.fill();
 }
 ```
+
 ### Documentation
 
 The main class is `TreeWrapper`, located in the header `interface/TreeWrapper.h`. It works like a map, where each key is string representing a branch from the tree. You can access each branch with the `[]` operator. To create or read a branch named `branch` in the tree, just do:
@@ -101,7 +102,7 @@ template <typename T> const T& read();
 template <typename T> T& write();
 ```
 
-Each method returns a (const) reference of type `T`. **It's very important to keep the ference around if you want to library to work**. Do not do:
+Each method returns a (const) reference of type `T`. **It's very important to keep the reference around if you want the library to work**. Do not do:
 
 ```C++
 const float branchValue = tree["branch"].read<float>();
@@ -110,6 +111,29 @@ const float branchValue = tree["branch"].read<float>();
 but do (notice the usage of the reference!):
 ```C++
 const float& branchValue = tree["branch"].read<float>();
+```
+
+#### Automatic reset
+
+A very nice feature of the wrapper is the automatic reset of the branches after a `fill()`. You don't need to reset your variables at the beginning of each event, it's done for you automatically. For the moment, `reset` means assigning `0` to the branch variable, or calling `clear()` if the branch variable is a `std::vector`. If you need a default behaviour, you have to write your own `resetter`: you must specialized the provided `ResetterT` struct with your own type. Suppose you use a `std::string` for one branch. You'll need to declare:
+
+```C++
+
+template <>
+struct ResetterT<std::string>: Resetter {
+    public:
+        ResetterT(std::string& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data = "";
+        }
+
+    private:
+        T& m_data;
+};
+
 ```
 
 License
