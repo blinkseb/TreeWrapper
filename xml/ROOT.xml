@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<namespace id="ROOT" name="ROOT" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <class name="Leaf" ref="ROOT::Leaf#ROOT::Leaf">
+    <brief> This class holds anything related to the branch</brief>
+  </class>
+  <class name="TreeWrapper" ref="ROOT::TreeWrapper#ROOT::TreeWrapper">
+    <brief> Using the TreeWrapper library</brief>
+  </class>
+</namespace>

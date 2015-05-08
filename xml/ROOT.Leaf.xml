@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="ROOT::Leaf" name="Leaf" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> This class holds anything related to the branch</brief>
+  <doc>The only way to create a Leaf instance is from TreeWrapper <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref>.
+</doc>
+  <methodtemplate id="ROOT::Leaf::read" name="read">
+    <brief> Register this branch for read access</brief>
+    <doc>Register this branch for read access. The branch must exists in the tree and created to hold data of type T.
+
+Internally, the `TTree::SetBranchAddress` method is called to read the branch. The status of the branch is also set to 1.
+
+</doc>
+    <return>
+      <doc>a const reference to the data hold by this branch. The content is in read-only mode, and will change each time <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::next">ROOT::TreeWrapper::next</ref> is called.</doc>
+      <type name="const T" qualifier=" const &amp;" />
+    </return>
+    <templatetypeparameter id="ROOT::Leaf::read::T" name="T">
+      <brief>Type of data this branch holds</brief>
+    </templatetypeparameter>
+  </methodtemplate>
+  <methodtemplate id="ROOT::Leaf::write" name="write">
+    <brief> Register this branch for write access</brief>
+    <doc>Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
+
+Internally, the `TTree::Branch` method is called to create the new branch.
+
+</doc>
+    <return>
+      <doc>a reference to the data hold by this branch. Change the content of this reference before calling <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::fill">ROOT::TreeWrapper::fill</ref> to change the branch data.</doc>
+      <type name="T" qualifier=" &amp;" />
+    </return>
+    <templatetypeparameter id="ROOT::Leaf::write::T" name="T">
+      <brief>Type of data this branch holds</brief>
+    </templatetypeparameter>
+  </methodtemplate>
+</class>

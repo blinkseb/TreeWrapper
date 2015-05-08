@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<struct id="Brancher" interface="true" name="Brancher" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <subclass access="public" name="BranchCreaterT" ref="BranchCreaterT#BranchCreaterT" />
+  <subclass access="public" name="BranchReaderT" ref="BranchReaderT#BranchReaderT" />
+  <method abstract="yes" id="Brancher::operator()" name="operator()" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="Brancher::operator()::" name="">
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
+    <argument id="Brancher::operator()::tree" name="tree">
+      <type name="TTree" qualifier="*" ref="TTree#TTree" />
+    </argument>
+  </method>
+</struct>

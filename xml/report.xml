@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report id="report" title="Documention generator" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <doc>
+This page provides a documentation coverage report. Any undocumented symbols
+are reported here together with the location of where you should document them.
+
+This report contains the following sections:
+
+1. [Coverage](#report/coverage): The documented symbols coverage.
+2. [Arguments](#report/arguments): Errors about undocumented, misspelled function arguments and
+return values.
+3. [References](#report/references): Unresolved cross references.
+</doc>
+  <coverage>
+    <type documented="2" name="methodtemplate" undocumented="0" />
+    <type documented="0" name="struct" undocumented="5">
+      <undocumented id="Brancher" name="Brancher">
+        <location column="1" file="interface/Brancher.h" line="7" />
+      </undocumented>
+      <undocumented id="Resetter" name="Resetter">
+        <location column="1" file="interface/Resetter.h" line="10" />
+      </undocumented>
+      <undocumented id="ResetterT" name="ResetterT">
+        <location column="1" file="interface/Resetter.h" line="50" />
+      </undocumented>
+      <undocumented id="ResetterT" name="ResetterT">
+        <location column="1" file="interface/Resetter.h" line="65" />
+      </undocumented>
+      <undocumented id="ResetterT" name="ResetterT">
+        <location column="1" file="interface/Resetter.h" line="80" />
+      </undocumented>
+    </type>
+    <type documented="3" name="templatetypeparameter" undocumented="2">
+      <undocumented id="BranchCreaterT::T" name="T">
+        <location column="11" file="interface/Brancher.h" line="12" />
+      </undocumented>
+      <undocumented id="BranchReaderT::T" name="T">
+        <location column="11" file="interface/Brancher.h" line="27" />
+      </undocumented>
+    </type>
+    <type documented="0" name="namespace" undocumented="1">
+      <undocumented id="ROOT" name="ROOT">
+        <location column="1" file="interface/TreeWrapper.h" line="10" />
+        <location column="1" file="interface/Leaf.h" line="11" />
+      </undocumented>
+    </type>
+    <type documented="7" name="method" undocumented="8">
+      <undocumented id="BranchCreaterT::operator()" name="operator()">
+        <location column="9" file="interface/Brancher.h" line="19" />
+      </undocumented>
+      <undocumented id="BranchReaderT::operator()" name="operator()">
+        <location column="9" file="interface/Brancher.h" line="34" />
+      </undocumented>
+      <undocumented id="Brancher::operator()" name="operator()">
+        <location column="9" file="interface/Brancher.h" line="9" />
+      </undocumented>
+      <undocumented id="Resetter::reset" name="reset">
+        <location column="9" file="interface/Resetter.h" line="12" />
+      </undocumented>
+      <undocumented id="ResetterT::reset" name="reset">
+        <location column="9" file="interface/Resetter.h" line="25" />
+      </undocumented>
+      <undocumented id="ResetterT::reset" name="reset">
+        <location column="9" file="interface/Resetter.h" line="57" />
+      </undocumented>
+      <undocumented id="ResetterT::reset" name="reset">
+        <location column="9" file="interface/Resetter.h" line="72" />
+      </undocumented>
+      <undocumented id="ResetterT::reset" name="reset">
+        <location column="9" file="interface/Resetter.h" line="87" />
+      </undocumented>
+    </type>
+    <type documented="2" name="constructor" undocumented="6">
+      <undocumented id="BranchCreaterT::BranchCreaterT&lt;T&gt;" name="BranchCreaterT&lt;T&gt;">
+        <location column="9" file="interface/Brancher.h" line="15" />
+      </undocumented>
+      <undocumented id="BranchReaderT::BranchReaderT&lt;T&gt;" name="BranchReaderT&lt;T&gt;">
+        <location column="9" file="interface/Brancher.h" line="30" />
+      </undocumented>
+      <undocumented id="ResetterT::ResetterT" name="ResetterT">
+        <location column="9" file="interface/Resetter.h" line="53" />
+      </undocumented>
+      <undocumented id="ResetterT::ResetterT" name="ResetterT">
+        <location column="9" file="interface/Resetter.h" line="68" />
+      </undocumented>
+      <undocumented id="ResetterT::ResetterT" name="ResetterT">
+        <location column="9" file="interface/Resetter.h" line="83" />
+      </undocumented>
+      <undocumented id="ResetterT::ResetterT&lt;T&gt;" name="ResetterT&lt;T&gt;">
+        <location column="9" file="interface/Resetter.h" line="21" />
+      </undocumented>
+    </type>
+    <type documented="1" name="structtemplate" undocumented="2">
+      <undocumented id="BranchCreaterT" name="BranchCreaterT">
+        <location column="1" file="interface/Brancher.h" line="12" />
+      </undocumented>
+      <undocumented id="BranchReaderT" name="BranchReaderT">
+        <location column="1" file="interface/Brancher.h" line="27" />
+      </undocumented>
+    </type>
+    <type documented="2" name="class" undocumented="1">
+      <undocumented id="TTree" name="TTree">
+        <location column="1" file="interface/TreeWrapper.h" line="8" />
+      </undocumented>
+    </type>
+  </coverage>
+  <arguments />
+  <references />
+</report>

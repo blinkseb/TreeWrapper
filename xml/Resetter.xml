@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<struct id="Resetter" interface="true" name="Resetter" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <subclass access="public" name="ResetterT" ref="ResetterT#ResetterT" />
+  <method abstract="yes" id="Resetter::reset" name="reset" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+</struct>

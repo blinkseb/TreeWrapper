@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<index xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <namespace name="ROOT" ref="ROOT#ROOT">
+    <class name="Leaf" ref="ROOT::Leaf#ROOT::Leaf">
+      <brief> This class holds anything related to the branch</brief>
+    </class>
+    <class name="TreeWrapper" ref="ROOT::TreeWrapper#ROOT::TreeWrapper">
+      <brief> Using the TreeWrapper library</brief>
+    </class>
+  </namespace>
+  <structtemplate name="BranchCreaterT" ref="BranchCreaterT#BranchCreaterT">
+    <templatetypeparameter id="BranchCreaterT::T" name="T" />
+  </structtemplate>
+  <struct name="Brancher" ref="Brancher#Brancher" />
+  <structtemplate name="BranchReaderT" ref="BranchReaderT#BranchReaderT">
+    <templatetypeparameter id="BranchReaderT::T" name="T" />
+  </structtemplate>
+  <struct name="Resetter" ref="Resetter#Resetter" />
+  <structtemplate name="ResetterT" ref="ResetterT#ResetterT">
+    <brief> Base class for `reset` functionnality.</brief>
+    <templatetypeparameter id="ResetterT::T" name="T">
+      <brief>The type of the variable to reset</brief>
+    </templatetypeparameter>
+  </structtemplate>
+  <struct name="ResetterT" ref="ResetterT#ResetterT" />
+  <struct name="ResetterT" ref="ResetterT#ResetterT" />
+  <struct name="ResetterT" ref="ResetterT#ResetterT" />
+  <class name="TTree" ref="TTree#TTree" />
+  <report name="Documentation generator" ref="report" />
+</index>

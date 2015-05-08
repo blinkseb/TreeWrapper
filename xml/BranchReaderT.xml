@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<structtemplate id="BranchReaderT" name="BranchReaderT" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <base access="public">
+    <type name="Brancher" ref="Brancher#Brancher" />
+  </base>
+  <templatetypeparameter id="BranchReaderT::T" name="T" />
+  <constructor id="BranchReaderT::BranchReaderT&lt;T&gt;" name="BranchReaderT&lt;T&gt;">
+    <argument id="BranchReaderT::BranchReaderT&lt;T&gt;::data" name="data">
+      <type name="T" qualifier="*" />
+    </argument>
+    <argument id="BranchReaderT::BranchReaderT&lt;T&gt;::branch" name="branch">
+      <type name="TBranch" qualifier="**" />
+    </argument>
+  </constructor>
+  <method id="BranchReaderT::operator()" name="operator()" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="BranchReaderT::operator()::name" name="name">
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
+    <argument id="BranchReaderT::operator()::tree" name="tree">
+      <type name="TTree" qualifier="*" ref="TTree#TTree" />
+    </argument>
+    <override name="Brancher::operator()" ref="Brancher#Brancher::operator()" />
+  </method>
+</structtemplate>

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<struct id="ResetterT" name="ResetterT" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <base access="public">
+    <type name="Resetter" ref="Resetter#Resetter" />
+  </base>
+  <constructor id="ResetterT::ResetterT" name="ResetterT">
+    <argument id="ResetterT::ResetterT::data" name="data">
+      <type name="TClonesArray" qualifier=" &amp;" />
+    </argument>
+  </constructor>
+  <method id="ResetterT::reset" name="reset" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <override name="Resetter::reset" ref="Resetter#Resetter::reset" />
+  </method>
+</struct>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="ROOT::TreeWrapper" name="TreeWrapper" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Using the TreeWrapper library</brief>
+  <constructor abstract="yes" id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+    <brief> Create a new instance of TreeWrapper.</brief>
+    <doc>Create a new instance of TreeWrapper. If you use this constructor, each branches accessed with <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref> will be created / red immediately.
+
+If any branches are present in the tree, their default status will be put to 0. Only branches registered with <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref> will have their status put to 1. See [here](https://root.cern.ch/root/html/TTree.html#TTree:SetBranchStatus) for more details about the meaning of branch status.
+</doc>
+    <argument id="ROOT::TreeWrapper::TreeWrapper::tree" name="tree">
+      <doc>The tree to wrap. Must not be null.</doc>
+      <type name="TTree" qualifier="*" ref="TTree#TTree" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+    <brief> Create a new instance of TreeWrapper.</brief>
+    <doc>Create a new instance of TreeWrapper. You must call <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::init">ROOT::TreeWrapper::init</ref> when your tree is ready to be wrapped.
+</doc>
+  </constructor>
+  <method id="ROOT::TreeWrapper::fill" name="fill">
+    <brief> Fill the tree.</brief>
+    <doc>Fill the tree. If <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::fill::reset">reset</ref> is true, all the branches will be resetted to their default value. See <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref> and <ref ref="ResetterT#ResetterT">ResetterT</ref> for more details about the reset procedure.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="ROOT::TreeWrapper::fill::reset" name="reset">
+      <doc>If true, automatically reset all the branches to their default value after filling the tree</doc>
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="ROOT::TreeWrapper::getEntries" name="getEntries">
+    <brief> Get the number of entries in the tree</brief>
+    <return>
+      <doc>the number of entries in the tree</doc>
+      <type name="uint64_t" />
+    </return>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapper::init" name="init">
+    <brief> Wrap the tree.</brief>
+    <doc>Registered all branches already accessed with <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref> in the tree. Subsequent call to <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref> will cause the branch to be registered immediately into <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::init::tree">tree</ref>.
+
+If any branches are present in the tree, their default status will be put to 0. Only branches registered with <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]">ROOT::TreeWrapper::operator[]</ref> will have their status put to 1. See [here](https://root.cern.ch/root/html/TTree.html#TTree:SetBranchStatus) for more details about the meaning of branch status.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="ROOT::TreeWrapper::init::tree" name="tree">
+      <doc>The tree to wrap. Must not be null.</doc>
+      <type name="TTree" qualifier="*" ref="TTree#TTree" />
+    </argument>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapper::next" name="next">
+    <brief> Read the next entry of the tree.</brief>
+    <return>
+      <doc>True if the entry has been red correctly, false otherwise</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapper::operator[]" name="operator[]">
+    <brief> Register a new branch into the tree.</brief>
+    <doc>Register a new branch named <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::operator[]::name">name</ref> into the tree. The read or write mode is chosen by the user with a call to <ref ref="ROOT::Leaf#ROOT::Leaf::read">ROOT::Leaf::read</ref> or <ref ref="ROOT::Leaf#ROOT::Leaf::write">ROOT::Leaf::write</ref> methods.
+
+The type of the branch is automatically derived from the template type used when calling <ref ref="ROOT::Leaf#ROOT::Leaf::read">ROOT::Leaf::read</ref> or <ref ref="ROOT::Leaf#ROOT::Leaf::write">ROOT::Leaf::write</ref>. For example, calling
+```
+Leaf::write&lt;float&gt;()
+```
+will create a new branch holding a float. No restriction of type is applied.
+
+</doc>
+    <return>
+      <doc>A reference to the newly registered branch. Use one of the method <ref ref="ROOT::Leaf#ROOT::Leaf::read">ROOT::Leaf::read</ref> or <ref ref="ROOT::Leaf#ROOT::Leaf::write">ROOT::Leaf::write</ref> to set the type of data hold by this branch, and to choose the read or write access mode.</doc>
+      <type name="Leaf" qualifier=" &amp;" ref="ROOT::Leaf#ROOT::Leaf" />
+    </return>
+    <argument id="ROOT::TreeWrapper::operator[]::name" name="name">
+      <doc>The branch name</doc>
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
+  </method>
+  <method id="ROOT::TreeWrapper::reset" name="reset">
+    <brief> Reset all the branches to their default value.</brief>
+    <doc>Reset all the branches to their default value. See <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref> and <ref ref="ResetterT#ResetterT">ResetterT</ref> for more details about the reset procedure.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method id="ROOT::TreeWrapper::rewind" name="rewind">
+    <brief>Rewind to the beginning of the tree.</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+</class>
