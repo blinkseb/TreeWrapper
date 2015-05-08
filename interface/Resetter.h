@@ -1,11 +1,21 @@
 #pragma once
 
+#include <TLorentzVector.h>
+#include <TClonesArray.h>
+#include <Math/Vector4Dfwd.h>
+
+#include <vector>
+#include <string>
+
 struct Resetter {
     public:
         virtual void reset() = 0;
 };
 
-template <typename T>
+/* Base class for `reset` functionnality.
+ * @T The type of the variable to reset
+ */
+ template <typename T>
 struct ResetterT: Resetter {
     public:
         ResetterT(T& data)
@@ -35,4 +45,64 @@ struct ResetterT<std::vector<T>>: Resetter {
 
     private:
         std::vector<T>& m_data;
+};
+
+template <>
+struct ResetterT<std::string>: Resetter {
+    public:
+        ResetterT(std::string& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.clear();
+        }
+
+    private:
+        std::string& m_data;
+};
+
+template <>
+struct ResetterT<TLorentzVector>: Resetter {
+    public:
+        ResetterT(TLorentzVector& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.SetPtEtaPhiE(0., 0., 0., 0.);
+        }
+
+    private:
+        TLorentzVector& m_data;
+};
+
+template <>
+struct ResetterT<TClonesArray>: Resetter {
+    public:
+        ResetterT(TClonesArray& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.Clear();
+        }
+
+    private:
+        TClonesArray& m_data;
+};
+
+template <typename CoordinateSystem>
+struct ResetterT<ROOT::Math::LorentzVector<CoordinateSystem>>: Resetter {
+    public:
+        ResetterT(ROOT::Math::LorentzVector<CoordinateSystem>& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.SetCoordinates(0., 0., 0., 0.);
+        }
+
+    private:
+        ROOT::Math::LorentzVector<CoordinateSystem>& m_data;
 };

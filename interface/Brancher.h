@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+
+#include <TTree.h>
+
 struct Brancher {
     public:
         virtual void operator()(const std::string&, TTree* tree) = 0;

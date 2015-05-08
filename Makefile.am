@@ -10,3 +10,9 @@ AM_CPPFLAGS             = @AM_CPPFLAGS@ -Iinterface -I@ROOTINCDIR@
 AM_LDFLAGS              = -L@ROOTLIBDIR@
 
 include_HEADERS = interface/TreeWrapper.h interface/Leaf.h interface/Brancher.h interface/Resetter.h
+
+COMMON_DOC_FLAGS = --report --output html $(libTreeWrapper_la_SOURCES)
+
+doc:
+	@echo "Generating documentation..."; \
+	cldoc generate $(AM_CPPFLAGS) -- $(COMMON_DOC_FLAGS)

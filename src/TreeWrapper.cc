@@ -53,7 +53,7 @@ namespace ROOT {
         if (m_leafs.count(name))
             return *m_leafs.at(name);
 
-        std::shared_ptr<Leaf> leaf = std::make_shared<Leaf>(name, m_tree);
+        std::shared_ptr<Leaf> leaf(new Leaf(name, m_tree));
         m_leafs[name] = leaf;
 
         if (m_entry != -1) {

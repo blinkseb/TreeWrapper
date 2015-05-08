@@ -9,10 +9,27 @@
 #include "Resetter.h"
 
 namespace ROOT {
+
+    class TreeWrapper;
+
+    /* This class holds anything related to the branch
+     *
+     * The only way to create a Leaf instance is from TreeWrapper <TreeWrapper::operator[]>.
+     */
     class Leaf {
-        public:
+        private:
             Leaf(const std::string& name, TTree* tree);
 
+        public:
+            /* Register this branch for write access
+             * @T Type of data this branch holds
+             *
+             * Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
+             *
+             * Internally, the `TTree::Branch` method is called to create the new branch.
+             *
+             * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data.
+             */
             template<typename T> T& write() {
                 if (m_data.empty()) {
                     // Initialize boost::any with empty data.
@@ -33,6 +50,15 @@ namespace ROOT {
                 return boost::any_cast<T&>(m_data);
             };
 
+            /* Register this branch for read access
+             * @T Type of data this branch holds
+             *
+             * Register this branch for read access. The branch must exists in the tree and created to hold data of type T.
+             *
+             * Internally, the `TTree::SetBranchAddress` method is called to read the branch. The status of the branch is also set to 1.
+             *
+             * @return a const reference to the data hold by this branch. The content is in read-only mode, and will change each time <TreeWrapper::next> is called.
+             */
             template<typename T> const T& read() {
                 if (m_data.empty()) {
                     // Initialize boost::any with empty data.
@@ -55,6 +81,7 @@ namespace ROOT {
                 return const_cast<const T&>(*boost::any_cast<std::shared_ptr<T>>(m_data));
             }
 
+        private:
             void init(TTree* tree) {
                 m_tree = tree;
                 if (m_brancher.get())
@@ -67,16 +94,16 @@ namespace ROOT {
               }
             }
 
+            TBranch* getBranch() {
+                return m_branch;
+            }
+
             Leaf(const Leaf&) = delete;
             Leaf& operator=(const Leaf&) = delete;
 
         private:
 
             friend class TreeWrapper;
-
-            TBranch* getBranch() {
-                return m_branch;
-            }
 
             boost::any m_data;
             TBranch* m_branch;
