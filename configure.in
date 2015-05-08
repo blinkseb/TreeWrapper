@@ -4,7 +4,7 @@ AC_PREREQ(2.59)
 
 AC_INIT([TreeWrapper], [0.1], [sebastien.brochet@cern.ch])
 
-AM_INIT_AUTOMAKE([1.9 foreign])
+AM_INIT_AUTOMAKE([1.9 foreign subdir-objects])
 
 AC_CONFIG_MACRO_DIR([m4])
 
