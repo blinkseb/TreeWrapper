@@ -71,7 +71,7 @@ namespace ROOT {
                     if (m_tree) {
                         m_tree->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
                         // Enable read for this branch
-                        m_branch->SetStatus(1);
+                        ROOT::utils::activateBranch(m_branch);
                     } else {
                         m_brancher.reset(new BranchReaderT<T>(data, &m_branch));
                     }

@@ -4,6 +4,20 @@
 
 #include <TTree.h>
 
+namespace ROOT {
+
+    namespace utils {
+
+        /* Set the branch status to 1 and activate the branch <branch>.
+         * @branch the branch to activate. Must not be null.
+         *
+         * Set the branch status to 1 and activate the branch <branch>. This will cause the branch to be red by a call to <TreeWrapper::next>.
+         * If this branch has any sub-branches, they will also be activated (useful if <branch> points to a complex object and the branch has a split-mode greater than 0).
+         */
+        void activateBranch(TBranch* branch);
+    }
+}
+
 struct Brancher {
     public:
         virtual void operator()(const std::string&, TTree* tree) = 0;
@@ -33,7 +47,7 @@ struct BranchReaderT: Brancher {
 
         virtual void operator()(const std::string& name, TTree* tree) {
             tree->SetBranchAddress<T>(name.c_str(), m_data, m_branch);
-            (*m_branch)->SetStatus(1);
+            ROOT::utils::activateBranch((*m_branch));
         }
 
     private:
