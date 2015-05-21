@@ -23,6 +23,7 @@ namespace ROOT {
         public:
             /* Register this branch for write access
              * @T Type of data this branch holds
+             * @autoReset if true, this leaf will be automatically reset to its default value. Set to false to disable this mecanism.
              *
              * Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
              *
@@ -30,14 +31,15 @@ namespace ROOT {
              *
              * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data.
              */
-            template<typename T> T& write() {
+            template<typename T> T& write(bool autoReset = true) {
                 if (m_data.empty()) {
                     // Initialize boost::any with empty data.
                     // This allocate the necessary memory
                     m_data = boost::any(T());
 
                     T& data = boost::any_cast<T&>(m_data);
-                    m_resetter.reset(new ResetterT<T>(data));
+                    if (autoReset)
+                        m_resetter.reset(new ResetterT<T>(data));
 
                     if (m_tree) {
                         // Register this Leaf in the tree
