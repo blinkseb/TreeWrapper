@@ -5,6 +5,7 @@
 #include <Math/Vector4Dfwd.h>
 
 #include <vector>
+#include <utility>
 #include <string>
 
 struct Resetter {
@@ -60,6 +61,22 @@ struct ResetterT<std::string>: Resetter {
 
     private:
         std::string& m_data;
+};
+
+template <typename T, typename U>
+struct ResetterT<std::pair<T, U>>: Resetter {
+    public:
+        ResetterT(std::pair<T, U>& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.first = 0;
+            m_data.second = 0;
+        }
+
+    private:
+        std::pair<T, U>& m_data;
 };
 
 template <>
