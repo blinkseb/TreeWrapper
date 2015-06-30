@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Leaf.h"
+#include "TreeGroup.h"
 
 class TTree;
 
@@ -93,6 +94,15 @@ namespace ROOT {
              * @return A reference to the newly registered branch. Use one of the method <Leaf::read> or <Leaf::write> to set the type of data hold by this branch, and to choose the read or write access mode.
              */
             Leaf& operator[](const std::string& name);
+
+            /* Create a new group inside the tree.
+             * @prefix A string which will be automatically prefixed to all the branches created in this group
+             *
+             * Create a new group inside the tree. A group is a collection of branches prefixed by the string ``prefix``.
+             *
+             * @return A new instance of TreeWrapper representing the current group of branches.
+             */
+            TreeGroup group(const std::string& prefix);
 
         private:
             TTree* m_tree;

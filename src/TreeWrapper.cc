@@ -64,4 +64,8 @@ namespace ROOT {
 
         return *leaf;
     }
+
+    TreeGroup TreeWrapper::group(const std::string& prefix) {
+        return TreeGroup(prefix, *this);
+    }
 };
