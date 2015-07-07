@@ -3,7 +3,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = libTreeWrapper.la
-libTreeWrapper_la_SOURCES = src/TreeWrapper.cc src/Leaf.cc src/TreeGroup.cc interface/TreeWrapper.h interface/Leaf.h interface/TreeGroup.h interface/Brancher.h interface/Resetter.h
+libTreeWrapper_la_SOURCES = src/TreeWrapper.cc src/Leaf.cc src/Brancher.cc src/TreeGroup.cc interface/TreeWrapper.h interface/Leaf.h interface/TreeGroup.h interface/Brancher.h interface/Resetter.h
 libTreeWrapper_la_LIBADD  = @ROOTLIBS@ @ROOTAUXLIBS@
 
 AM_CPPFLAGS             = @AM_CPPFLAGS@ -Iinterface -I@ROOTINCDIR@
