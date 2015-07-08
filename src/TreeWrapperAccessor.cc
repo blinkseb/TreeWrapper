@@ -1,6 +1,10 @@
-#include "TreeWrapperAccessor.h"
-
-#include "TreeWrapper.h"
+#ifdef FROM_CMSSW
+#include "../interface/TreeWrapper.h"
+#include "../interface/TreeWrapperAccessor.h"
+#else
+#include <TreeWrapper.h>
+#include <TreeWrapperAccessor.h>
+#endif
 
 namespace ROOT {
     TreeWrapperAccessor::TreeWrapperAccessor(ROOT::TreeWrapper* wrap) {
