@@ -1,5 +1,6 @@
 #include <memory>
 
+#include <TChain.h>
 #include <TTree.h>
 
 #ifdef FROM_CMSSW
@@ -11,25 +12,26 @@
 namespace ROOT {
     TreeWrapper::TreeWrapper(TTree* tree):
         m_tree(tree),
+        m_chain(nullptr),
         m_entry(-1) {
             init(tree);
         }
 
     TreeWrapper::TreeWrapper():
         m_tree(nullptr),
+        m_chain(nullptr),
         m_entry(-1) {
 
         }
 
     void TreeWrapper::init(TTree* tree) {
         m_tree = tree;
-        if (m_tree->GetListOfLeaves()->GetEntriesFast() > 0) {
-            // Disable reading of all branches by default
-            m_tree->SetBranchStatus("*", 0);
-        }
+        m_chain = dynamic_cast<TChain*>(tree);
+        if (m_chain)
+            m_chain->LoadTree(0);
 
         for (auto& leaf: m_leafs)
-            leaf.second->init(m_tree);
+            leaf.second->init(this);
     }
 
     /**
@@ -45,7 +47,30 @@ namespace ROOT {
 
         m_entry++;
 
-        return m_tree->GetEntry(m_entry) > 0;
+        return getEntry(m_entry);
+    }
+
+    bool TreeWrapper::getEntry(uint64_t entry) {
+        uint64_t local_entry = entry;
+        if (m_chain) {
+            int64_t tree_index = m_chain->LoadTree(local_entry);
+            if (tree_index < 0) {
+                return false;
+            }
+
+            local_entry = static_cast<uint64_t>(tree_index);
+        }
+
+        for (auto& leaf: m_leafs) {
+            int res = leaf.second->getBranch()->GetEntry(local_entry);
+            if (res <= 0) {
+                std::cout << "GetEntry failed for branch " << leaf.first << ". Return code: " << res << std::endl;
+                return false;
+            }
+        }
+
+        m_entry = entry;
+        return true;
     }
 
     Leaf& TreeWrapper::operator[](const std::string& name) {
@@ -53,14 +78,8 @@ namespace ROOT {
         if (m_leafs.count(name))
             return *m_leafs.at(name);
 
-        std::shared_ptr<Leaf> leaf(new Leaf(name, m_tree));
+        std::shared_ptr<Leaf> leaf(new Leaf(name, this));
         m_leafs[name] = leaf;
-
-        if (m_entry != -1) {
-            // A global GetEntry already happened in the tree
-            // Call GetEntry directly on the Branch to catch up
-            leaf->getBranch()->GetEntry(m_entry);
-        }
 
         return *leaf;
     }

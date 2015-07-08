@@ -1,12 +1,14 @@
 #pragma once
 
 #include <boost/any.hpp>
+#include <iostream>
 #include <memory>
 
 #include <TTree.h>
 
 #include "Brancher.h"
 #include "Resetter.h"
+#include "TreeWrapperAccessor.h"
 
 namespace ROOT {
 
@@ -18,7 +20,7 @@ namespace ROOT {
      */
     class Leaf {
         private:
-            Leaf(const std::string& name, TTree* tree);
+            Leaf(const std::string& name, const TreeWrapperAccessor& tree);
 
         public:
             /* Register this branch for write access
@@ -41,9 +43,9 @@ namespace ROOT {
                     if (autoReset)
                         m_resetter.reset(new ResetterT<T>(data));
 
-                    if (m_tree) {
+                    if (m_tree.tree()) {
                         // Register this Leaf in the tree
-                        m_tree->Branch<T>(m_name.c_str(), &data);
+                        m_tree.tree()->Branch<T>(m_name.c_str(), &data);
                     } else {
                         m_brancher.reset(new BranchCreaterT<T>(data));
                     }
@@ -62,32 +64,61 @@ namespace ROOT {
              * @return a const reference to the data hold by this branch. The content is in read-only mode, and will change each time <TreeWrapper::next> is called.
              */
             template<typename T> const T& read() {
-                if (m_data.empty()) {
+                if (m_data.empty() && m_data_ptr == nullptr) {
+
+                    m_store_class = TClass::GetClass(typeid(T)) != nullptr;
+
                     // Initialize boost::any with empty data.
                     // This allocate the necessary memory
-                    m_data = boost::any(std::shared_ptr<T>(new T()));
+                    
+                    if (! m_store_class) {
+                        m_data = boost::any(std::shared_ptr<T>(new T()));
 
-                    T* data = boost::any_cast<std::shared_ptr<T>>(m_data).get();
-                    m_resetter.reset(new ResetterT<T>(*data));
+                        T* data = boost::any_cast<std::shared_ptr<T>>(m_data).get();
+                        m_resetter.reset(new ResetterT<T>(*data));
 
-                    if (m_tree) {
-                        m_tree->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
-                        // Enable read for this branch
-                        ROOT::utils::activateBranch(m_branch);
+                        if (m_tree.tree()) {
+                            m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
+                            // Enable read for this branch
+                            ROOT::utils::activateBranch(m_branch);
+                        } else {
+                            m_brancher.reset(new BranchReaderT<T>(data, &m_branch));
+                        }
                     } else {
-                        m_brancher.reset(new BranchReaderT<T>(data, &m_branch));
+                        m_data_ptr = nullptr;
+                        m_data_ptr_ptr = &m_data_ptr;
+
+                        if (m_tree.tree()) {
+                            m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), reinterpret_cast<T**>(m_data_ptr_ptr), &m_branch);
+                            // Enable read for this branch
+                            ROOT::utils::activateBranch(m_branch);
+                        } else {
+                            m_brancher.reset(new BranchReaderT<T>(reinterpret_cast<T**>(m_data_ptr_ptr), &m_branch));
+                        }
+
+                        return const_cast<const T&>(*reinterpret_cast<T*>(m_data_ptr));
+                    }
+
+
+                    if (m_tree.entry() != -1) {
+                        // A global GetEntry already happened in the tree
+                        // Call GetEntry directly on the Branch to catch up
+                        m_branch->GetEntry(m_tree.entry());
                     }
                 }
 
                 // Return a const since we read from the tree
-                return const_cast<const T&>(*boost::any_cast<std::shared_ptr<T>>(m_data));
+                if (! m_store_class)
+                    return const_cast<const T&>(*boost::any_cast<std::shared_ptr<T>>(m_data));
+                else
+                    return const_cast<const T&>(*reinterpret_cast<T*>(m_data_ptr));
             }
 
         private:
-            void init(TTree* tree) {
+            void init(const TreeWrapperAccessor& tree) {
                 m_tree = tree;
                 if (m_brancher.get())
-                    (*m_brancher)(m_name, m_tree);
+                    (*m_brancher)(m_name, m_tree.tree());
             }
 
             void reset() {
@@ -108,12 +139,18 @@ namespace ROOT {
             friend class TreeWrapper;
 
             boost::any m_data;
+
+            void* m_data_ptr = nullptr;
+            void** m_data_ptr_ptr = nullptr;
+
             TBranch* m_branch;
 
             std::string m_name;
-            TTree* m_tree;
+            TreeWrapperAccessor m_tree;
 
             std::unique_ptr<Resetter> m_resetter;
             std::unique_ptr<Brancher> m_brancher;
+
+            bool m_store_class;
     };
 };

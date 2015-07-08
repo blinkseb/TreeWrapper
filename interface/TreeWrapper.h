@@ -7,6 +7,7 @@
 #include "TreeGroup.h"
 
 class TTree;
+class TChain;
 
 namespace ROOT {
 
@@ -15,6 +16,8 @@ namespace ROOT {
      * 
      * */
     class TreeWrapper {
+
+        friend ROOT::TreeWrapperAccessor;
 
         public:
             /* Create a new instance of TreeWrapper.
@@ -46,6 +49,8 @@ namespace ROOT {
              * @return True if the entry has been red correctly, false otherwise
              */
             bool next();
+
+            bool getEntry(uint64_t entry);
 
             // Rewind to the beginning of the tree.
             void rewind() {
@@ -106,6 +111,7 @@ namespace ROOT {
 
         private:
             TTree* m_tree;
+            TChain* m_chain; // In case of the tree is in reality a TChain, this stores m_tree casted to TChain
             int64_t m_entry;
 
             std::unordered_map<std::string, std::shared_ptr<Leaf>> m_leafs;

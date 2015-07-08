@@ -5,7 +5,7 @@
 #endif
 
 namespace ROOT {
-    Leaf::Leaf(const std::string& name, TTree* tree):
+    Leaf::Leaf(const std::string& name, const TreeWrapperAccessor& tree):
         m_name(name),
         m_tree(tree) {
 

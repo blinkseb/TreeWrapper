@@ -45,12 +45,21 @@ struct BranchReaderT: Brancher {
             : m_data(data), m_branch(branch) {
             }
 
+        BranchReaderT(T** data, TBranch** branch)
+            : m_data_ptr(data), m_branch(branch) {
+            }
+
         virtual void operator()(const std::string& name, TTree* tree) {
-            tree->SetBranchAddress<T>(name.c_str(), m_data, m_branch);
+            if (m_data)
+                tree->SetBranchAddress<T>(name.c_str(), m_data, m_branch);
+            else
+                tree->SetBranchAddress<T>(name.c_str(), m_data_ptr, m_branch);
+
             ROOT::utils::activateBranch((*m_branch));
         }
 
     private:
-        T* m_data;
+        T* m_data = nullptr;
+        T** m_data_ptr = nullptr;
         TBranch** m_branch;
 };
