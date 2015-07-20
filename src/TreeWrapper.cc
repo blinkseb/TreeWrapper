@@ -24,6 +24,18 @@ namespace ROOT {
 
         }
 
+    TreeWrapper::TreeWrapper(const TreeWrapper& o) {
+        m_tree = o.m_tree;
+        m_chain = o.m_chain;
+        m_leafs = o.m_leafs;
+    }
+
+    TreeWrapper::TreeWrapper(TreeWrapper&& o) {
+        m_tree = o.m_tree;
+        m_chain = o.m_chain;
+        m_leafs = std::move(o.m_leafs);
+    }
+
     void TreeWrapper::init(TTree* tree) {
         m_tree = tree;
         m_chain = dynamic_cast<TChain*>(tree);

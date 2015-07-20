@@ -35,6 +35,12 @@ namespace ROOT {
              */
             TreeWrapper();
 
+            /* Copy constructor */
+            TreeWrapper(const TreeWrapper& o);
+
+            /* Move constructor */
+            TreeWrapper(TreeWrapper&& o);
+
             /* Wrap the tree.
              * @tree The tree to wrap. Must not be null.
              *

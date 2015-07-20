@@ -13,6 +13,9 @@ namespace ROOT {
             Leaf& operator[](const std::string& name);
             TreeGroup group(const std::string& prefix) const;
 
+            TreeGroup(const TreeGroup& o);
+            TreeGroup(TreeGroup&& o);
+
         private:
 
             TreeGroup(const std::string prefix, TreeWrapper& wrapper):
