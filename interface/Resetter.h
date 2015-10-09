@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <utility>
+#include <map>
 #include <string>
 
 struct Resetter {
@@ -46,6 +47,21 @@ struct ResetterT<std::vector<T>>: Resetter {
 
     private:
         std::vector<T>& m_data;
+};
+
+template <typename T1, typename T2>
+struct ResetterT<std::map<T1, T2>>: Resetter {
+    public:
+        ResetterT(std::map<T1, T2>& data)
+            : m_data(data) {
+            }
+
+        virtual void reset() {
+            m_data.clear();
+        }
+
+    private:
+        std::map<T1, T2>& m_data;
 };
 
 template <>
