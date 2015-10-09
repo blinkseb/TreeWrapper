@@ -12,98 +12,155 @@ return values.
 3. [References](#report/references): Unresolved cross references.
 </doc>
   <coverage>
+    <type documented="1" name="function" undocumented="0" />
     <type documented="2" name="methodtemplate" undocumented="0" />
-    <type documented="0" name="struct" undocumented="5">
+    <type documented="0" name="struct" undocumented="6">
       <undocumented id="Brancher" name="Brancher">
-        <location column="1" file="interface/Brancher.h" line="7" />
+        <location column="1" file="interface/Brancher.h" line="21" />
+      </undocumented>
+      <undocumented id="ROOT::TreeWrapperAccessor" name="TreeWrapperAccessor">
+        <location column="5" file="interface/TreeWrapperAccessor.h" line="8" />
       </undocumented>
       <undocumented id="Resetter" name="Resetter">
-        <location column="1" file="interface/Resetter.h" line="10" />
+        <location column="1" file="interface/Resetter.h" line="12" />
       </undocumented>
       <undocumented id="ResetterT" name="ResetterT">
-        <location column="1" file="interface/Resetter.h" line="50" />
+        <location column="1" file="interface/Resetter.h" line="67" />
       </undocumented>
       <undocumented id="ResetterT" name="ResetterT">
-        <location column="1" file="interface/Resetter.h" line="65" />
+        <location column="1" file="interface/Resetter.h" line="98" />
       </undocumented>
       <undocumented id="ResetterT" name="ResetterT">
-        <location column="1" file="interface/Resetter.h" line="80" />
+        <location column="1" file="interface/Resetter.h" line="113" />
       </undocumented>
     </type>
     <type documented="3" name="templatetypeparameter" undocumented="2">
       <undocumented id="BranchCreaterT::T" name="T">
-        <location column="11" file="interface/Brancher.h" line="12" />
+        <location column="11" file="interface/Brancher.h" line="26" />
       </undocumented>
       <undocumented id="BranchReaderT::T" name="T">
-        <location column="11" file="interface/Brancher.h" line="27" />
+        <location column="11" file="interface/Brancher.h" line="41" />
       </undocumented>
     </type>
-    <type documented="0" name="namespace" undocumented="1">
+    <type documented="0" name="namespace" undocumented="2">
       <undocumented id="ROOT" name="ROOT">
-        <location column="1" file="interface/TreeWrapper.h" line="10" />
-        <location column="1" file="interface/Leaf.h" line="11" />
+        <location column="1" file="interface/TreeWrapper.h" line="12" />
+        <location column="1" file="interface/Leaf.h" line="13" />
+        <location column="1" file="interface/TreeGroup.h" line="5" />
+        <location column="1" file="interface/Brancher.h" line="7" />
+        <location column="1" file="interface/TreeWrapperAccessor.h" line="5" />
+      </undocumented>
+      <undocumented id="ROOT::utils" name="utils">
+        <location column="5" file="interface/Brancher.h" line="9" />
       </undocumented>
     </type>
-    <type documented="7" name="method" undocumented="8">
+    <type documented="8" name="method" undocumented="13">
       <undocumented id="BranchCreaterT::operator()" name="operator()">
-        <location column="9" file="interface/Brancher.h" line="19" />
+        <location column="9" file="interface/Brancher.h" line="33" />
       </undocumented>
       <undocumented id="BranchReaderT::operator()" name="operator()">
-        <location column="9" file="interface/Brancher.h" line="34" />
+        <location column="9" file="interface/Brancher.h" line="52" />
       </undocumented>
       <undocumented id="Brancher::operator()" name="operator()">
-        <location column="9" file="interface/Brancher.h" line="9" />
+        <location column="9" file="interface/Brancher.h" line="23" />
+      </undocumented>
+      <undocumented id="ROOT::TreeGroup::group" name="group">
+        <location column="13" file="interface/TreeGroup.h" line="14" />
+      </undocumented>
+      <undocumented id="ROOT::TreeGroup::operator[]" name="operator[]">
+        <location column="13" file="interface/TreeGroup.h" line="13" />
+      </undocumented>
+      <undocumented id="ROOT::TreeWrapper::getEntry" name="getEntry">
+        <location column="13" file="interface/TreeWrapper.h" line="59" />
+      </undocumented>
+      <undocumented id="ROOT::TreeWrapperAccessor::entry" name="entry">
+        <location column="9" file="interface/TreeWrapperAccessor.h" line="14" />
+      </undocumented>
+      <undocumented id="ROOT::TreeWrapperAccessor::tree" name="tree">
+        <location column="9" file="interface/TreeWrapperAccessor.h" line="13" />
       </undocumented>
       <undocumented id="Resetter::reset" name="reset">
-        <location column="9" file="interface/Resetter.h" line="12" />
+        <location column="9" file="interface/Resetter.h" line="14" />
       </undocumented>
       <undocumented id="ResetterT::reset" name="reset">
-        <location column="9" file="interface/Resetter.h" line="25" />
+        <location column="9" file="interface/Resetter.h" line="27" />
       </undocumented>
       <undocumented id="ResetterT::reset" name="reset">
-        <location column="9" file="interface/Resetter.h" line="57" />
+        <location column="9" file="interface/Resetter.h" line="74" />
       </undocumented>
       <undocumented id="ResetterT::reset" name="reset">
-        <location column="9" file="interface/Resetter.h" line="72" />
+        <location column="9" file="interface/Resetter.h" line="105" />
       </undocumented>
       <undocumented id="ResetterT::reset" name="reset">
-        <location column="9" file="interface/Resetter.h" line="87" />
+        <location column="9" file="interface/Resetter.h" line="120" />
       </undocumented>
     </type>
-    <type documented="2" name="constructor" undocumented="6">
+    <type documented="0" name="field" undocumented="1">
+      <undocumented id="ROOT::TreeWrapperAccessor::wrapper" name="wrapper">
+        <location column="9" file="interface/TreeWrapperAccessor.h" line="9" />
+      </undocumented>
+    </type>
+    <type documented="4" name="constructor" undocumented="10">
       <undocumented id="BranchCreaterT::BranchCreaterT&lt;T&gt;" name="BranchCreaterT&lt;T&gt;">
-        <location column="9" file="interface/Brancher.h" line="15" />
+        <location column="9" file="interface/Brancher.h" line="29" />
       </undocumented>
       <undocumented id="BranchReaderT::BranchReaderT&lt;T&gt;" name="BranchReaderT&lt;T&gt;">
-        <location column="9" file="interface/Brancher.h" line="30" />
+        <location column="9" file="interface/Brancher.h" line="44" />
+      </undocumented>
+      <undocumented id="BranchReaderT::BranchReaderT&lt;T&gt;" name="BranchReaderT&lt;T&gt;">
+        <location column="9" file="interface/Brancher.h" line="48" />
+      </undocumented>
+      <undocumented id="ROOT::TreeGroup::TreeGroup" name="TreeGroup">
+        <location column="13" file="interface/TreeGroup.h" line="16" />
+      </undocumented>
+      <undocumented id="ROOT::TreeGroup::TreeGroup" name="TreeGroup">
+        <location column="13" file="interface/TreeGroup.h" line="17" />
+      </undocumented>
+      <undocumented id="ROOT::TreeWrapperAccessor::TreeWrapperAccessor" name="TreeWrapperAccessor">
+        <location column="9" file="interface/TreeWrapperAccessor.h" line="12" />
       </undocumented>
       <undocumented id="ResetterT::ResetterT" name="ResetterT">
-        <location column="9" file="interface/Resetter.h" line="53" />
+        <location column="9" file="interface/Resetter.h" line="70" />
       </undocumented>
       <undocumented id="ResetterT::ResetterT" name="ResetterT">
-        <location column="9" file="interface/Resetter.h" line="68" />
+        <location column="9" file="interface/Resetter.h" line="101" />
       </undocumented>
       <undocumented id="ResetterT::ResetterT" name="ResetterT">
-        <location column="9" file="interface/Resetter.h" line="83" />
+        <location column="9" file="interface/Resetter.h" line="116" />
       </undocumented>
       <undocumented id="ResetterT::ResetterT&lt;T&gt;" name="ResetterT&lt;T&gt;">
-        <location column="9" file="interface/Resetter.h" line="21" />
+        <location column="9" file="interface/Resetter.h" line="23" />
       </undocumented>
     </type>
     <type documented="1" name="structtemplate" undocumented="2">
       <undocumented id="BranchCreaterT" name="BranchCreaterT">
-        <location column="1" file="interface/Brancher.h" line="12" />
+        <location column="1" file="interface/Brancher.h" line="26" />
       </undocumented>
       <undocumented id="BranchReaderT" name="BranchReaderT">
-        <location column="1" file="interface/Brancher.h" line="27" />
+        <location column="1" file="interface/Brancher.h" line="41" />
       </undocumented>
     </type>
-    <type documented="2" name="class" undocumented="1">
+    <type documented="2" name="class" undocumented="3">
+      <undocumented id="ROOT::TreeGroup" name="TreeGroup">
+        <location column="5" file="interface/TreeGroup.h" line="9" />
+      </undocumented>
+      <undocumented id="TChain" name="TChain">
+        <location column="1" file="interface/TreeWrapper.h" line="10" />
+      </undocumented>
       <undocumented id="TTree" name="TTree">
-        <location column="1" file="interface/TreeWrapper.h" line="8" />
+        <location column="1" file="interface/TreeWrapper.h" line="9" />
       </undocumented>
     </type>
   </coverage>
-  <arguments />
+  <arguments>
+    <function id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+      <location column="13" file="interface/TreeWrapper.h" line="39" />
+      <undocumented name="o" />
+    </function>
+    <function id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+      <location column="13" file="interface/TreeWrapper.h" line="42" />
+      <undocumented name="o" />
+    </function>
+  </arguments>
   <references />
 </report>

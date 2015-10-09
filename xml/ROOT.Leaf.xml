@@ -29,6 +29,10 @@ Internally, the `TTree::Branch` method is called to create the new branch.
       <doc>a reference to the data hold by this branch. Change the content of this reference before calling <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::fill">ROOT::TreeWrapper::fill</ref> to change the branch data.</doc>
       <type name="T" qualifier=" &amp;" />
     </return>
+    <argument id="ROOT::Leaf::write::autoReset" name="autoReset">
+      <doc>if true, this leaf will be automatically reset to its default value. Set to false to disable this mecanism.</doc>
+      <type builtin="yes" name="bool" />
+    </argument>
     <templatetypeparameter id="ROOT::Leaf::write::T" name="T">
       <brief>Type of data this branch holds</brief>
     </templatetypeparameter>

@@ -12,6 +12,14 @@
       <type name="TBranch" qualifier="**" />
     </argument>
   </constructor>
+  <constructor id="BranchReaderT::BranchReaderT&lt;T&gt;" name="BranchReaderT&lt;T&gt;">
+    <argument id="BranchReaderT::BranchReaderT&lt;T&gt;::data" name="data">
+      <type name="T" qualifier="**" />
+    </argument>
+    <argument id="BranchReaderT::BranchReaderT&lt;T&gt;::branch" name="branch">
+      <type name="TBranch" qualifier="**" />
+    </argument>
+  </constructor>
   <method id="BranchReaderT::operator()" name="operator()" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="void" />

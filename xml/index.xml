@@ -1,12 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <index xmlns="http://jessevdk.github.com/cldoc/1.0">
   <namespace name="ROOT" ref="ROOT#ROOT">
+    <namespace name="utils" ref="ROOT::utils#ROOT::utils" />
     <class name="Leaf" ref="ROOT::Leaf#ROOT::Leaf">
       <brief> This class holds anything related to the branch</brief>
     </class>
+    <class name="TreeGroup" ref="ROOT::TreeGroup#ROOT::TreeGroup" />
     <class name="TreeWrapper" ref="ROOT::TreeWrapper#ROOT::TreeWrapper">
       <brief> Using the TreeWrapper library</brief>
     </class>
+    <struct name="TreeWrapperAccessor" ref="ROOT::TreeWrapperAccessor#ROOT::TreeWrapperAccessor" />
   </namespace>
   <structtemplate name="BranchCreaterT" ref="BranchCreaterT#BranchCreaterT">
     <templatetypeparameter id="BranchCreaterT::T" name="T" />
@@ -25,6 +28,7 @@
   <struct name="ResetterT" ref="ResetterT#ResetterT" />
   <struct name="ResetterT" ref="ResetterT#ResetterT" />
   <struct name="ResetterT" ref="ResetterT#ResetterT" />
+  <class name="TChain" ref="TChain#TChain" />
   <class name="TTree" ref="TTree#TTree" />
   <report name="Documentation generator" ref="report" />
 </index>

@@ -17,6 +17,18 @@ If any branches are present in the tree, their default status will be put to 0. 
     <doc>Create a new instance of TreeWrapper. You must call <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::init">ROOT::TreeWrapper::init</ref> when your tree is ready to be wrapped.
 </doc>
   </constructor>
+  <constructor abstract="yes" id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+    <brief>Copy constructor</brief>
+    <argument id="ROOT::TreeWrapper::TreeWrapper::o" name="o">
+      <type name="TreeWrapper" qualifier=" const &amp;" ref="ROOT::TreeWrapper#ROOT::TreeWrapper" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
+    <brief>Move constructor</brief>
+    <argument id="ROOT::TreeWrapper::TreeWrapper::o" name="o">
+      <type name="TreeWrapper &amp;&amp;" />
+    </argument>
+  </constructor>
   <method id="ROOT::TreeWrapper::fill" name="fill">
     <brief> Fill the tree.</brief>
     <doc>Fill the tree. If <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::fill::reset">reset</ref> is true, all the branches will be resetted to their default value. See <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref>, <ref ref="ResetterT#ResetterT">ResetterT</ref> and <ref ref="ResetterT#ResetterT">ResetterT</ref> for more details about the reset procedure.
@@ -35,6 +47,28 @@ If any branches are present in the tree, their default status will be put to 0. 
       <doc>the number of entries in the tree</doc>
       <type name="uint64_t" />
     </return>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapper::getEntry" name="getEntry">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="ROOT::TreeWrapper::getEntry::entry" name="entry">
+      <type name="uint64_t" />
+    </argument>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapper::group" name="group">
+    <brief> Create a new group inside the tree.</brief>
+    <doc>Create a new group inside the tree. A group is a collection of branches prefixed by the string ``prefix``.
+
+</doc>
+    <return>
+      <doc>A new instance of TreeWrapper representing the current group of branches.</doc>
+      <type name="TreeGroup" ref="ROOT::TreeGroup#ROOT::TreeGroup" />
+    </return>
+    <argument id="ROOT::TreeWrapper::group::prefix" name="prefix">
+      <doc>A string which will be automatically prefixed to all the branches created in this group</doc>
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
   </method>
   <method abstract="yes" id="ROOT::TreeWrapper::init" name="init">
     <brief> Wrap the tree.</brief>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<struct id="ROOT::TreeWrapperAccessor" interface="true" name="TreeWrapperAccessor" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <field id="ROOT::TreeWrapperAccessor::wrapper" name="wrapper">
+    <type name="TreeWrapper" qualifier="*" ref="ROOT::TreeWrapper#ROOT::TreeWrapper" />
+  </field>
+  <constructor abstract="yes" id="ROOT::TreeWrapperAccessor::TreeWrapperAccessor" name="TreeWrapperAccessor">
+    <argument id="ROOT::TreeWrapperAccessor::TreeWrapperAccessor::wrap" name="wrap">
+      <type name="TreeWrapper" qualifier="*" ref="ROOT::TreeWrapper#ROOT::TreeWrapper" />
+    </argument>
+  </constructor>
+  <method abstract="yes" id="ROOT::TreeWrapperAccessor::entry" name="entry">
+    <return>
+      <type name="uint64_t" />
+    </return>
+  </method>
+  <method abstract="yes" id="ROOT::TreeWrapperAccessor::tree" name="tree">
+    <return>
+      <type name="TTree" qualifier="*" ref="TTree#TTree" />
+    </return>
+  </method>
+</struct>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="ROOT::TreeGroup" name="TreeGroup" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <constructor abstract="yes" id="ROOT::TreeGroup::TreeGroup" name="TreeGroup">
+    <argument id="ROOT::TreeGroup::TreeGroup::o" name="o">
+      <type name="TreeGroup" qualifier=" const &amp;" ref="ROOT::TreeGroup#ROOT::TreeGroup" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="ROOT::TreeGroup::TreeGroup" name="TreeGroup">
+    <argument id="ROOT::TreeGroup::TreeGroup::o" name="o">
+      <type name="TreeGroup &amp;&amp;" />
+    </argument>
+  </constructor>
+  <method abstract="yes" id="ROOT::TreeGroup::group" name="group">
+    <return>
+      <type name="TreeGroup" ref="ROOT::TreeGroup#ROOT::TreeGroup" />
+    </return>
+    <argument id="ROOT::TreeGroup::group::prefix" name="prefix">
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
+  </method>
+  <method abstract="yes" id="ROOT::TreeGroup::operator[]" name="operator[]">
+    <return>
+      <type name="Leaf" qualifier=" &amp;" ref="ROOT::Leaf#ROOT::Leaf" />
+    </return>
+    <argument id="ROOT::TreeGroup::operator[]::name" name="name">
+      <type name="std::string" qualifier=" const &amp;" />
+    </argument>
+  </method>
+</class>

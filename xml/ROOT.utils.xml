@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<namespace id="ROOT::utils" name="utils" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <function id="ROOT::utils::activateBranch" name="activateBranch">
+    <brief> Set the branch status to 1 and activate the branch <ref ref="ROOT::utils#ROOT::utils::activateBranch::branch">branch</ref>.</brief>
+    <doc>Set the branch status to 1 and activate the branch <ref ref="ROOT::utils#ROOT::utils::activateBranch::branch">branch</ref>. This will cause the branch to be red by a call to <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::next">ROOT::TreeWrapper::next</ref>.
+If this branch has any sub-branches, they will also be activated (useful if <ref ref="ROOT::utils#ROOT::utils::activateBranch::branch">branch</ref> points to a complex object and the branch has a split-mode greater than 0).
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="ROOT::utils::activateBranch::branch" name="branch">
+      <doc>the branch to activate. Must not be null.</doc>
+      <type name="TBranch" qualifier="*" />
+    </argument>
+  </function>
+</namespace>
