@@ -49,11 +49,14 @@ Internally, the `TTree::Branch` method is called to create the new branch.
       <type name="T" qualifier=" &amp;" />
     </return>
     <argument id="ROOT::Leaf::write_with_init::parameters" name="parameters">
+      <doc>A list of arguments which will be passed to the constructor of T</doc>
       <type name="P &amp;&amp;..." />
     </argument>
     <templatetypeparameter id="ROOT::Leaf::write_with_init::T" name="T">
       <brief>Type of data this branch holds</brief>
     </templatetypeparameter>
-    <templatetypeparameter id="ROOT::Leaf::write_with_init::P" name="P" />
+    <templatetypeparameter id="ROOT::Leaf::write_with_init::P" name="P">
+      <brief>Variadic template for constructor arguments</brief>
+    </templatetypeparameter>
   </methodtemplate>
 </class>
