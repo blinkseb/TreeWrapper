@@ -39,7 +39,8 @@ namespace ROOT {
 
             /* Register this branch for write access
              * @T Type of data this branch holds
-             * @Pparameters A list of arguments which will be passed to the constructor of T
+             * @P Variadic template for constructor arguments
+             * @parameters A list of arguments which will be passed to the constructor of T
              *
              * Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
              *
