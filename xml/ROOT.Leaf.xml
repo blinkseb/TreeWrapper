@@ -37,4 +37,23 @@ Internally, the `TTree::Branch` method is called to create the new branch.
       <brief>Type of data this branch holds</brief>
     </templatetypeparameter>
   </methodtemplate>
+  <methodtemplate id="ROOT::Leaf::write_with_init" name="write_with_init">
+    <brief> Register this branch for write access</brief>
+    <doc>Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
+
+Internally, the `TTree::Branch` method is called to create the new branch.
+
+</doc>
+    <return>
+      <doc>a reference to the data hold by this branch. Change the content of this reference before calling <ref ref="ROOT::TreeWrapper#ROOT::TreeWrapper::fill">ROOT::TreeWrapper::fill</ref> to change the branch data. Since this value is initialized with some parameters, auto reset is automatically disabled.</doc>
+      <type name="T" qualifier=" &amp;" />
+    </return>
+    <argument id="ROOT::Leaf::write_with_init::parameters" name="parameters">
+      <type name="P &amp;&amp;..." />
+    </argument>
+    <templatetypeparameter id="ROOT::Leaf::write_with_init::T" name="T">
+      <brief>Type of data this branch holds</brief>
+    </templatetypeparameter>
+    <templatetypeparameter id="ROOT::Leaf::write_with_init::P" name="P" />
+  </methodtemplate>
 </class>

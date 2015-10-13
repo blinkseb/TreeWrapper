@@ -13,7 +13,7 @@ return values.
 </doc>
   <coverage>
     <type documented="1" name="function" undocumented="0" />
-    <type documented="2" name="methodtemplate" undocumented="0" />
+    <type documented="3" name="methodtemplate" undocumented="0" />
     <type documented="0" name="struct" undocumented="6">
       <undocumented id="Brancher" name="Brancher">
         <location column="1" file="interface/Brancher.h" line="21" />
@@ -34,12 +34,21 @@ return values.
         <location column="1" file="interface/Resetter.h" line="113" />
       </undocumented>
     </type>
-    <type documented="3" name="templatetypeparameter" undocumented="2">
+    <type documented="4" name="templatetypeparameter" undocumented="5">
       <undocumented id="BranchCreaterT::T" name="T">
         <location column="11" file="interface/Brancher.h" line="26" />
       </undocumented>
       <undocumented id="BranchReaderT::T" name="T">
         <location column="11" file="interface/Brancher.h" line="41" />
+      </undocumented>
+      <undocumented id="ROOT::Leaf::write_internal::P" name="P">
+        <location column="34" file="interface/Leaf.h" line="131" />
+      </undocumented>
+      <undocumented id="ROOT::Leaf::write_internal::T" name="T">
+        <location column="22" file="interface/Leaf.h" line="131" />
+      </undocumented>
+      <undocumented id="ROOT::Leaf::write_with_init::P" name="P">
+        <location column="34" file="interface/Leaf.h" line="50" />
       </undocumented>
     </type>
     <type documented="0" name="namespace" undocumented="2">
@@ -160,6 +169,11 @@ return values.
     <function id="ROOT::TreeWrapper::TreeWrapper" name="TreeWrapper">
       <location column="13" file="interface/TreeWrapper.h" line="42" />
       <undocumented name="o" />
+    </function>
+    <function id="ROOT::Leaf::write_with_init" name="write_with_init">
+      <location column="13" file="interface/Leaf.h" line="50" />
+      <undocumented name="parameters" />
+      <misspelled name="Pparameters" />
     </function>
   </arguments>
   <references />
