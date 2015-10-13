@@ -34,24 +34,21 @@ namespace ROOT {
              * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data.
              */
             template<typename T> T& write(bool autoReset = true) {
-                if (m_data.empty()) {
-                    // Initialize boost::any with empty data.
-                    // This allocate the necessary memory
-                    m_data = boost::any(T());
+                return write_internal<T>(autoReset);
+            };
 
-                    T& data = boost::any_cast<T&>(m_data);
-                    if (autoReset)
-                        m_resetter.reset(new ResetterT<T>(data));
-
-                    if (m_tree.tree()) {
-                        // Register this Leaf in the tree
-                        m_tree.tree()->Branch<T>(m_name.c_str(), &data);
-                    } else {
-                        m_brancher.reset(new BranchCreaterT<T>(data));
-                    }
-                }
-
-                return boost::any_cast<T&>(m_data);
+            /* Register this branch for write access
+             * @T Type of data this branch holds
+             * @Pparameters A list of arguments which will be passed to the constructor of T
+             *
+             * Register this branch for write access. A new branch will be created in the tree properly configured to hold data of type T.
+             *
+             * Internally, the `TTree::Branch` method is called to create the new branch.
+             *
+             * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data. Since this value is initialized with some parameters, auto reset is automatically disabled.
+             */
+            template<typename T, typename... P> T& write_with_init(P&&... parameters) {
+                return write_internal<T, P...>(false, std::forward<P>(parameters)...);
             };
 
             /* Register this branch for read access
@@ -129,6 +126,32 @@ namespace ROOT {
 
             TBranch* getBranch() {
                 return m_branch;
+            }
+
+            template<typename T, typename... P> T& write_internal(bool autoReset, P&&... parameters) {
+                if (m_data.empty()) {
+                    // Initialize boost::any with empty data.
+                    // This allocate the necessary memory
+                    if (sizeof...(parameters) != 0) {
+                        autoReset = false;
+                        m_data = boost::any(T(std::forward<P>(parameters)...));
+                    } else {
+                        m_data = boost::any(T());
+                    }
+
+                    T& data = boost::any_cast<T&>(m_data);
+                    if (autoReset)
+                        m_resetter.reset(new ResetterT<T>(data));
+
+                    if (m_tree.tree()) {
+                        // Register this Leaf in the tree
+                        m_tree.tree()->Branch<T>(m_name.c_str(), &data);
+                    } else {
+                        m_brancher.reset(new BranchCreaterT<T>(data));
+                    }
+                }
+
+                return boost::any_cast<T&>(m_data);
             }
 
             Leaf(const Leaf&) = delete;
