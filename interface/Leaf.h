@@ -34,7 +34,19 @@ namespace ROOT {
              * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data.
              */
             template<typename T> T& write(bool autoReset = true) {
-                return write_internal<T>(autoReset);
+                return write_internal<T>(false, autoReset);
+            };
+
+            /* Register a transient branch
+             * @T Type of data this branch holds
+             * @autoReset if true, this leaf will be automatically reset to its default value. Set to false to disable this mecanism.
+             *
+             * Register a transient branch. No branch will be created into the tree, but auto-reset mechanism is still provided.
+             *
+             * @return a reference to the data hold by this transient branch.
+             */
+            template<typename T> T& transient_write(bool autoReset = true) {
+                return write_internal<T>(true, autoReset);
             };
 
             /* Register this branch for write access
@@ -49,7 +61,7 @@ namespace ROOT {
              * @return a reference to the data hold by this branch. Change the content of this reference before calling <TreeWrapper::fill> to change the branch data. Since this value is initialized with some parameters, auto reset is automatically disabled.
              */
             template<typename T, typename... P> T& write_with_init(P&&... parameters) {
-                return write_internal<T, P...>(false, std::forward<P>(parameters)...);
+                return write_internal<T, P...>(false, false, std::forward<P>(parameters)...);
             };
 
             /* Register this branch for read access
@@ -129,7 +141,7 @@ namespace ROOT {
                 return m_branch;
             }
 
-            template<typename T, typename... P> T& write_internal(bool autoReset, P&&... parameters) {
+            template<typename T, typename... P> T& write_internal(bool transient, bool autoReset, P&&... parameters) {
                 if (m_data.empty()) {
                     // Initialize boost::any with empty data.
                     // This allocate the necessary memory
@@ -144,11 +156,13 @@ namespace ROOT {
                     if (autoReset)
                         m_resetter.reset(new ResetterT<T>(data));
 
-                    if (m_tree.tree()) {
-                        // Register this Leaf in the tree
-                        m_tree.tree()->Branch<T>(m_name.c_str(), &data);
-                    } else {
-                        m_brancher.reset(new BranchCreaterT<T>(data));
+                    if (! transient) {
+                        if (m_tree.tree()) {
+                            // Register this Leaf in the tree
+                            m_tree.tree()->Branch<T>(m_name.c_str(), &data);
+                        } else {
+                            m_brancher.reset(new BranchCreaterT<T>(data));
+                        }
                     }
                 }
 
