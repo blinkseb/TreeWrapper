@@ -44,6 +44,13 @@ namespace ROOT {
 
         for (auto& leaf: m_leafs)
             leaf.second->init(this);
+
+        for (auto it = m_leafs.begin(); it != m_leafs.end();) {
+            if (it->second->getBranch() == nullptr)
+                it = m_leafs.erase(it);
+            else
+                ++it;
+        }
     }
 
     /**
