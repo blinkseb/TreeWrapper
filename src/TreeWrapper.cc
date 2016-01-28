@@ -44,13 +44,6 @@ namespace ROOT {
 
         for (auto& leaf: m_leafs)
             leaf.second->init(this);
-
-        for (auto it = m_leafs.begin(); it != m_leafs.end();) {
-            if (it->second->getBranch() == nullptr)
-                it = m_leafs.erase(it);
-            else
-                ++it;
-        }
     }
 
     /**
@@ -70,6 +63,18 @@ namespace ROOT {
     }
 
     bool TreeWrapper::getEntry(uint64_t entry) {
+
+        if (! m_cleaned) {
+            for (auto it = m_leafs.begin(); it != m_leafs.end(); ) {
+                if (it->second->getBranch() == nullptr) {
+                    it = m_leafs.erase(it);
+                } else
+                    ++it;
+            }
+
+            m_cleaned = true;
+        }
+
         uint64_t local_entry = entry;
         if (m_chain) {
             int64_t tree_index = m_chain->LoadTree(local_entry);

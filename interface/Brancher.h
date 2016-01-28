@@ -50,6 +50,12 @@ struct BranchReaderT: Brancher {
             }
 
         virtual void operator()(const std::string& name, TTree* tree) {
+            *m_branch = tree->GetBranch(name.c_str());
+            if (! *m_branch) {
+                std::cout << "Warning: branch '" << name << "' not found in tree" << std::endl;
+                return;
+            }
+
             if (m_data)
                 tree->SetBranchAddress<T>(name.c_str(), m_data, m_branch);
             else

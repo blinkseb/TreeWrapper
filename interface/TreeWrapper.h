@@ -119,6 +119,7 @@ namespace ROOT {
             TTree* m_tree;
             TChain* m_chain; // In case of the tree is in reality a TChain, this stores m_tree casted to TChain
             int64_t m_entry;
+            bool m_cleaned = false;
 
             std::unordered_map<std::string, std::shared_ptr<Leaf>> m_leafs;
     };

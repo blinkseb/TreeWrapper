@@ -88,9 +88,14 @@ namespace ROOT {
                         m_resetter.reset(new ResetterT<T>(*data));
 
                         if (m_tree.tree()) {
-                            m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
-                            // Enable read for this branch
-                            ROOT::utils::activateBranch(m_branch);
+                            m_branch = m_tree.tree()->GetBranch(m_name.c_str());
+                            if (m_branch) {
+                                m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), data, &m_branch);
+                                // Enable read for this branch
+                                ROOT::utils::activateBranch(m_branch);
+                            } else {
+                                std::cout << "Warning: branch '" << m_name << "' not found in tree" << std::endl;
+                            }
                         } else {
                             m_brancher.reset(new BranchReaderT<T>(data, &m_branch));
                         }
@@ -99,9 +104,14 @@ namespace ROOT {
                         m_data_ptr_ptr = &m_data_ptr;
 
                         if (m_tree.tree()) {
-                            m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), reinterpret_cast<T**>(m_data_ptr_ptr), &m_branch);
-                            // Enable read for this branch
-                            ROOT::utils::activateBranch(m_branch);
+                            m_branch = m_tree.tree()->GetBranch(m_name.c_str());
+                            if (m_branch) {
+                                m_tree.tree()->SetBranchAddress<T>(m_name.c_str(), reinterpret_cast<T**>(m_data_ptr_ptr), &m_branch);
+                                // Enable read for this branch
+                                ROOT::utils::activateBranch(m_branch);
+                            } else {
+                                std::cout << "Warning: branch '" << m_name << "' not found in tree" << std::endl;
+                            }
                         } else {
                             m_brancher.reset(new BranchReaderT<T>(reinterpret_cast<T**>(m_data_ptr_ptr), &m_branch));
                         }
@@ -181,7 +191,7 @@ namespace ROOT {
             void* m_data_ptr = nullptr;
             void** m_data_ptr_ptr = nullptr;
 
-            TBranch* m_branch;
+            TBranch* m_branch = nullptr;
 
             std::string m_name;
             TreeWrapperAccessor m_tree;
