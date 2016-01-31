@@ -169,9 +169,9 @@ namespace ROOT {
                     if (! transient) {
                         if (m_tree.tree()) {
                             // Register this Leaf in the tree
-                            m_tree.tree()->Branch<T>(m_name.c_str(), &data);
+                            m_branch = m_tree.tree()->Branch<T>(m_name.c_str(), &data);
                         } else {
-                            m_brancher.reset(new BranchCreaterT<T>(data));
+                            m_brancher.reset(new BranchCreaterT<T>(data, &m_branch));
                         }
                     }
                 }

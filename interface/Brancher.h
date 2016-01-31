@@ -26,16 +26,17 @@ struct Brancher {
 template <typename T>
 struct BranchCreaterT: Brancher {
     public:
-        BranchCreaterT(T& data)
-            : m_data(data) {
+        BranchCreaterT(T& data, TBranch** branch)
+            : m_data(data), m_branch(branch) {
             }
 
         virtual void operator()(const std::string& name, TTree* tree) {
-            tree->Branch<T>(name.c_str(), &m_data);
+            *m_branch = tree->Branch<T>(name.c_str(), &m_data);
         }
 
     private:
         T& m_data;
+        TBranch** m_branch;
 };
 
 template <typename T>

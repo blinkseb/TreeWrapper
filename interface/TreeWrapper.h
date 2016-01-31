@@ -74,6 +74,24 @@ namespace ROOT {
                     this->reset();
             }
 
+            /* Fill all the branches.
+             * @reset If true, automatically reset all the branches to their default value after filling the tree
+             *
+             * Fill all the branches. If <reset> is true, all the branches will be resetted to their default value. See <ResetterT> for more details about the reset procedure.
+             * This is mostly the same as `TTree::Fill` except it bypasses all the AutoSave / AutoFlush mechanism.
+             */
+            size_t fillBranches(bool reset = true) {
+                size_t size = 0;
+                for (auto& leaf: m_leafs) {
+                    if (leaf.second->getBranch())
+                        size += leaf.second->getBranch()->Fill();
+                    if (reset)
+                        leaf.second->reset();
+                }
+
+                return size;
+            }
+
             /* Get the number of entries in the tree
              *
              * @return the number of entries in the tree
