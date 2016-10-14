@@ -58,6 +58,18 @@ namespace ROOT {
 
             bool getEntry(uint64_t entry);
 
+            /**
+             * \brief Set the entry to read next
+             */
+            void setEntry(uint64_t entry);
+
+            /**
+             * \brief Stop looping after entry.
+             *
+             * \note Event at entry will be processed
+             **/
+            void stopAt(uint64_t entry);
+
             // Rewind to the beginning of the tree.
             void rewind() {
                 m_entry = -1;
@@ -100,6 +112,13 @@ namespace ROOT {
                 return m_tree->GetEntries();
             }
 
+            inline uint64_t getStopAt() {
+                if (m_stop_at_set)
+                    return m_stop_at;
+                else
+                    return getEntries();
+            }
+
             /* Reset all the branches to their default value.
              *
              * Reset all the branches to their default value. See <ResetterT> for more details about the reset procedure.
@@ -136,7 +155,9 @@ namespace ROOT {
         private:
             TTree* m_tree;
             TChain* m_chain; // In case of the tree is in reality a TChain, this stores m_tree casted to TChain
-            int64_t m_entry;
+            uint64_t m_entry;
+            uint64_t m_stop_at;
+            bool m_stop_at_set = false;
             bool m_cleaned = false;
 
             std::unordered_map<std::string, std::shared_ptr<Leaf>> m_leafs;

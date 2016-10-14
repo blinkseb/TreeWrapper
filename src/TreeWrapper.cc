@@ -13,14 +13,14 @@ namespace ROOT {
     TreeWrapper::TreeWrapper(TTree* tree):
         m_tree(tree),
         m_chain(nullptr),
-        m_entry(-1) {
+        m_entry(0) {
             init(tree);
         }
 
     TreeWrapper::TreeWrapper():
         m_tree(nullptr),
         m_chain(nullptr),
-        m_entry(-1) {
+        m_entry(0) {
 
         }
 
@@ -52,14 +52,15 @@ namespace ROOT {
      * returns true in case of success, or false if the end of the tree is reached
      */
     bool TreeWrapper::next() {
-        uint64_t entries = getEntries();
+        uint64_t stop_at = getStopAt();
 
-        if (m_entry + 1 > (int64_t) entries)
+        if (m_entry >= stop_at)
             return false;
 
+        bool result = getEntry(m_entry);
         m_entry++;
 
-        return getEntry(m_entry);
+        return result;
     }
 
     bool TreeWrapper::getEntry(uint64_t entry) {
@@ -95,6 +96,23 @@ namespace ROOT {
 
         m_entry = entry;
         return true;
+    }
+
+    void TreeWrapper::setEntry(uint64_t entry) {
+        uint64_t stop_at = getStopAt();
+
+        if (entry >= stop_at)
+            m_entry = stop_at - 1;
+        else
+            m_entry = entry;
+    }
+
+    void TreeWrapper::stopAt(uint64_t entry) {
+        m_stop_at_set = true;
+        if (entry >= getEntries())
+            m_stop_at = getEntries();
+        else
+            m_stop_at = entry + 1;
     }
 
     Leaf& TreeWrapper::operator[](const std::string& name) {
