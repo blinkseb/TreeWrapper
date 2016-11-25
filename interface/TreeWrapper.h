@@ -52,11 +52,19 @@ namespace ROOT {
 
             /* Read the next entry of the tree.
              *
-             * @return True if the entry has been red correctly, false otherwise
+             * @param readall if true, read all branches of the tree instead only the selected ones
+             * @return True if the entry has been read correctly, false otherwise
              */
-            bool next();
+            bool next(bool readall = false);
 
-            bool getEntry(uint64_t entry);
+            /* Read a specific entry of the tree
+             *
+             * @param entry the entry to read
+             * @param readall if true, read all branches of the tree instead only the selected ones
+             *
+             * @return True if the entry has been read correctly, false otherwise
+             */
+            bool getEntry(uint64_t entry, bool readall = false);
 
             /**
              * \brief Set the entry to read next

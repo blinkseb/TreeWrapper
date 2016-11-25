@@ -51,19 +51,19 @@ namespace ROOT {
      * 
      * returns true in case of success, or false if the end of the tree is reached
      */
-    bool TreeWrapper::next() {
+    bool TreeWrapper::next(bool readall/* = false*/) {
         uint64_t stop_at = getStopAt();
 
         if (m_entry >= stop_at)
             return false;
 
-        bool result = getEntry(m_entry);
+        bool result = getEntry(m_entry, readall);
         m_entry++;
 
         return result;
     }
 
-    bool TreeWrapper::getEntry(uint64_t entry) {
+    bool TreeWrapper::getEntry(uint64_t entry, bool readall/* = false*/) {
 
         if (! m_cleaned) {
             for (auto it = m_leafs.begin(); it != m_leafs.end(); ) {
@@ -76,21 +76,26 @@ namespace ROOT {
             m_cleaned = true;
         }
 
-        uint64_t local_entry = entry;
-        if (m_chain) {
-            int64_t tree_index = m_chain->LoadTree(local_entry);
-            if (tree_index < 0) {
+        if (readall) {
+            if (! m_tree->GetEntry(entry, 1))
                 return false;
+        } else {
+            uint64_t local_entry = entry;
+            if (m_chain) {
+                int64_t tree_index = m_chain->LoadTree(local_entry);
+                if (tree_index < 0) {
+                    return false;
+                }
+
+                local_entry = static_cast<uint64_t>(tree_index);
             }
 
-            local_entry = static_cast<uint64_t>(tree_index);
-        }
-
-        for (auto& leaf: m_leafs) {
-            int res = leaf.second->getBranch()->GetEntry(local_entry);
-            if (res <= 0) {
-                std::cout << "GetEntry failed for branch " << leaf.first << ". Return code: " << res << std::endl;
-                return false;
+            for (auto& leaf: m_leafs) {
+                int res = leaf.second->getBranch()->GetEntry(local_entry);
+                if (res <= 0) {
+                    std::cout << "GetEntry failed for branch " << leaf.first << ". Return code: " << res << std::endl;
+                    return false;
+                }
             }
         }
 
