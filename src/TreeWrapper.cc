@@ -84,6 +84,7 @@ namespace ROOT {
             if (m_chain) {
                 int64_t tree_index = m_chain->LoadTree(local_entry);
                 if (tree_index < 0) {
+                    std::cerr << "ERROR: LoadTree failed. Return code: " << tree_index << std::endl;
                     return false;
                 }
 
@@ -93,7 +94,7 @@ namespace ROOT {
             for (auto& leaf: m_leafs) {
                 int res = leaf.second->getBranch()->GetEntry(local_entry);
                 if (res <= 0) {
-                    std::cout << "GetEntry failed for branch " << leaf.first << ". Return code: " << res << std::endl;
+                    std::cerr << "ERROR: GetEntry failed for branch " << leaf.first << ". Return code: " << res << std::endl;
                     return false;
                 }
             }
