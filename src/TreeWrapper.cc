@@ -28,12 +28,14 @@ namespace ROOT {
         m_tree = o.m_tree;
         m_chain = o.m_chain;
         m_leafs = o.m_leafs;
+        m_varrGroups = o.m_varrGroups;
     }
 
     TreeWrapper::TreeWrapper(TreeWrapper&& o) {
         m_tree = o.m_tree;
         m_chain = o.m_chain;
         m_leafs = std::move(o.m_leafs);
+        m_varrGroups = std::move(o.m_varrGroups);
     }
 
     void TreeWrapper::init(TTree* tree) {
@@ -44,6 +46,8 @@ namespace ROOT {
 
         for (auto& leaf: m_leafs)
             leaf.second->init(this);
+        for (auto& vGroup : m_varrGroups)
+            vGroup.second->init(this);
     }
 
     /**
@@ -72,6 +76,15 @@ namespace ROOT {
                 } else
                     ++it;
             }
+            for (auto& vGroup : m_varrGroups) {
+              for (auto it = vGroup.second->m_leafs.begin(); vGroup.second->m_leafs.end() != it; ++it) {
+                if ( ! it->second->getBranch() ) {
+                  it = vGroup.second->m_leafs.erase(it);
+                } else {
+                  ++it;
+                }
+              }
+            }
 
             m_cleaned = true;
         }
@@ -98,6 +111,9 @@ namespace ROOT {
                     return false;
                 }
             }
+        }
+        for ( auto& vGroup : m_varrGroups ) {
+          vGroup.second->getEntry(entry, readall);
         }
 
         m_entry = entry;
