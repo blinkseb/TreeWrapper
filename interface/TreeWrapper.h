@@ -5,6 +5,7 @@
 
 #include "Leaf.h"
 #include "TreeGroup.h"
+#include "VarrGroup.h"
 
 class TTree;
 class TChain;
@@ -160,6 +161,64 @@ namespace ROOT {
              */
             TreeGroup group(const std::string& prefix);
 
+            /* Retrieve or register a new group of variable-sized array branches.
+             * @S type of the length leaf
+             * @name name of the length leaf
+             *
+             * Register a new branch named <name>, with type <S>, into the tree. Only read mode is supported for now.
+             * Branches that use this length leaf can be retrieved from the VarrGroup in the same way as normal branches
+             * from the TreeWrapper.
+             *
+             * @return a VarrGroup reference
+             * @see VarrGroup
+             */
+            template<typename S>
+            VarrGroup& varrGroup(const std::string& lenName) {
+              if ( m_varrGroups.count(lenName) ) {
+                return *m_varrGroups[lenName];
+              }
+              std::shared_ptr<Leaf> lenLeaf(new Leaf(lenName, this));
+              std::shared_ptr<VarrGroup> group(VarrGroup::create<S>(lenLeaf, *this));
+              m_varrGroups[lenName] = group;
+              return *group;
+            }
+
+            /* Retrieve or register a new variable-sized array branch
+             * @name the branch name
+             * @S length-branch type
+             *
+             * Register a new branch named <name> into the tree. The type is derived from the template type when calling <VarrLeaf::read>.
+             * The length type is required to make sure the length branch is read correctly.
+             *
+             * @return A reference to the newly registered branch.
+             */
+            template<typename S>
+            VarrLeaf& varr(const std::string& name)
+            {
+              for ( auto& varrLeaf : m_varrGroups ) {
+                if ( varrLeaf.second->has(name) ) {
+                  return (*varrLeaf.second)[name];
+                }
+              }
+              if ( m_tree ) {
+                TLeaf* leaf = m_tree->GetLeaf(name.c_str());
+                if ( ! leaf ) {
+                  throw std::runtime_error("No leaf with name "+name+" found in tree");
+                }
+                TLeaf* leafCount = leaf->GetLeafCount();
+                if ( ! leafCount ) {
+                  throw std::runtime_error("No count leaf found for leaf "+name+", try just accessing it");
+                }
+                const std::string countName{leafCount->GetName()};
+                if ( m_varrGroups.count(countName) ) {
+                  return (*m_varrGroups[countName])[name];
+                }
+                return this->varrGroup<S>(leafCount->GetName())[name];
+              } else {
+                throw std::runtime_error("Branch "+name+" not found, and no tree registered");
+              }
+            }
+
         private:
             TTree* m_tree;
             TChain* m_chain; // In case of the tree is in reality a TChain, this stores m_tree casted to TChain
@@ -169,5 +228,6 @@ namespace ROOT {
             bool m_cleaned = false;
 
             std::unordered_map<std::string, std::shared_ptr<Leaf>> m_leafs;
+            std::unordered_map<std::string, std::shared_ptr<VarrGroup>> m_varrGroups;
     };
 };

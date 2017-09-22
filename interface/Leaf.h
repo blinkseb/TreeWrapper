@@ -13,6 +13,7 @@
 namespace ROOT {
 
     class TreeWrapper;
+    class VarrGroup;
 
     /* This class holds anything related to the branch
      *
@@ -23,6 +24,11 @@ namespace ROOT {
             Leaf(const std::string& name, const TreeWrapperAccessor& tree);
 
         public:
+            /* Name accessor
+             * @return the name of the leaf
+             */
+            const std::string& name() const { return m_name; }
+
             /* Register this branch for write access
              * @T Type of data this branch holds
              * @autoReset if true, this leaf will be automatically reset to its default value. Set to false to disable this mecanism.
@@ -185,6 +191,7 @@ namespace ROOT {
         private:
 
             friend class TreeWrapper;
+            friend class VarrGroup;
 
             boost::any m_data;
 
