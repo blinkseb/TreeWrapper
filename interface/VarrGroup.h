@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 
 #include "TreeWrapperAccessor.h"
 #include "Brancher.h"
