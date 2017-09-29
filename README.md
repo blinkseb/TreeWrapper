@@ -19,10 +19,10 @@ $ scram b -j4
 ```
 #### Standalone
 
-The library can also be used in standalone. A `configure` script is provided.
+The library can also be used in standalone, with cmake
 
 ```sh
-$ ./configure --prefix=INSTALL_LOCATION
+$ cmake -DCMAKE_INSTALL_PREFIX=INSTALL_LOCATION SOURCE_LOCATION
 $ make
 $ make install
 ```
