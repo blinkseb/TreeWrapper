@@ -126,7 +126,7 @@ namespace ROOT {
                     }
 
 
-                    if (m_tree.entry() != -1) {
+                    if ( m_branch && (m_tree.entry() != -1) ) {
                         // A global GetEntry already happened in the tree
                         // Call GetEntry directly on the Branch to catch up
                         m_branch->GetEntry(m_tree.entry());
