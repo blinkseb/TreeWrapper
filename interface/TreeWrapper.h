@@ -7,6 +7,8 @@
 #include "TreeGroup.h"
 #include "VarrGroup.h"
 
+#include <TBranchElement.h>
+
 class TTree;
 class TChain;
 
@@ -217,6 +219,40 @@ namespace ROOT {
               } else {
                 throw std::runtime_error("Branch "+name+" not found, and no tree registered");
               }
+            }
+
+            /**
+             * Copy the whole tree for entries that pass the selection
+             * @selection callable that evalutes to true for passing entries
+             *
+             * @return the new TTree
+             */
+            template<typename SELECTION>
+            std::unique_ptr<TTree> skim( const SELECTION& selection )
+            { // implementation from TTreePlayer::CopyTree
+              std::unique_ptr<TTree> newTree{m_tree->CloneTree(0)};
+
+              // The clone should not delete any shared i/o buffers.
+              const auto brListPtr = m_tree->GetListOfBranches();
+              const std::size_t nBr = brListPtr->GetEntriesFast();
+              for ( std::size_t iBr = 0; iBr != nBr; ++iBr ) {
+                TBranch* br = dynamic_cast<TBranch*>(brListPtr->UncheckedAt(iBr));
+                if ( br->InheritsFrom(TBranchElement::Class()) ) {
+                  TBranchElement* brElem = dynamic_cast<TBranchElement*>(br);
+                  brElem->ResetDeleteObject();
+                }
+              }
+
+              // loop and copy
+              for ( Long64_t entry = 0; entry < getEntries(); ++entry ) {
+                getEntry(entry, false);
+                if (selection()) {
+                  getEntry(entry, true);
+                  newTree->Fill();
+                }
+              }
+
+              return newTree;
             }
 
         private:
