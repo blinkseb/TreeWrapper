@@ -12,6 +12,7 @@
 struct Resetter {
     public:
         virtual void reset() = 0;
+        virtual ~Resetter() {}
 };
 
 /* Base class for `reset` functionnality.

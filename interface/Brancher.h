@@ -22,6 +22,7 @@ namespace ROOT {
 struct Brancher {
     public:
         virtual void operator()(const std::string&, TTree* tree) = 0;
+        virtual ~Brancher() {}
 };
 
 template <typename T>
